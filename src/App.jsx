@@ -7,7 +7,7 @@ import Products from './pages/Product';
 import Create from './pages/Create';
 import NotFound from './pages/NotFound';
 import Detail from './pages/Detail';
-
+import Results from './pages/Results';
 import './assets/css/app.css';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
         <Route exact path="/products/listar" component={Products} />
         <Route exact path="/products/crear" component={Create} />
         <Route  path="/products/:id" component={Detail} />
+        <Route  path="/results" component={Results} />
         <Route component={NotFound} />
       </Switch>
       <Footer />

@@ -1,84 +1,85 @@
-const Create = () => {
+import "./style.css";
+import { useState } from "react";
+
+function Create() {
+  
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
+
+
+
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+       fetch("http://localhost:3001/products/crear", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name: name,
+          price: price,
+          description: description,
+          discount: discount,
+          category: category
+        }),
+      });
+      let res = await res.json();
+      if (res.status === 200) {
+        setName("");
+        setPrice("");
+        setMessage("Producto creado correctamente");
+      } else {
+        setMessage("¡Algo ocurrió!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="container products-wrapper">
-      <div className="row">
-        <div className="col-12">
-          <h2 className="products-title">
-            Crear un Producto
-          </h2>
-        </div>
-      </div>
-      <div className="col-12">
-        <form action method id="create-product">
-          <div className="row product-detail">
-            <div className="col-12 col-md-6">
-              <label htmlFor="name" className="form-label">
-                Nombre del producto:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Ej: Pizza a la Piedra"
-                className="form-input"
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <label htmlFor="price" className="form-label">
-                Precio del producto:
-              </label>
-              <input
-                type="text"
-                id="price"
-                name="price"
-                placeholder="Ej: $9999"
-                className="form-input"
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <label htmlFor="discount" className="form-label">
-                Descuento:
-              </label>
-              <input
-                type="text"
-                id="discount"
-                name="discount"
-                placeholder="Ej: 15% off"
-                className="form-input"
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <label htmlFor="category" className="form-label">
-                Categoría:
-              </label>
-              <select name="category" id="category" className="form-input">
-                <option value>Elegí</option>
-                <option value="in-sale">En oferta</option>
-                <option value="visited">Últimos agregados</option>
-              </select>
-            </div>
-            <div className="col-12">
-              <label htmlFor="description" className="form-label">
-                Descipción:
-              </label>
-              <textarea
-                name="description"
-                placeholder="Ej: Hecha de masa madre, con tomates frescos y Muzzarella. Ligeramente dorada en su base con borde relleno"
-                id="description"
-                className="form-input"
-                defaultValue={""}
-              />
-            </div>
-            <div className="col-12">
-              <button type="submit" className="buy-now-button">
-                Crear Producto
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+    <div className="Create">
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text"
+          value={name}
+          placeholder="Nombre"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input 
+          type="text"
+          value={price}
+          placeholder="Precio"
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <input 
+          type="text"
+          value={description}
+          placeholder="Descripcion"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input 
+          type="text"
+          value={discount}
+          placeholder="Descuento"
+          onChange={(e) => setDiscount(e.target.value)}
+        />
+        <input 
+          type="text"
+          value={category}
+          placeholder="Categoria"
+          onChange={(e) => setCategory(e.target.value)}
+        />
+        <button type="submit">Crear Producto</button>
+
+        <div className="message">{message ? <p>{message}</p> : null}</div>
+      </form>
     </div>
   );
-};
+}
+
 
 export default Create;
