@@ -11,9 +11,9 @@ function Create() {
 
     } = useForm({
         defaultValues: {
-            name: "",
-            price: "",
-            discount: "",
+            name: "José",
+            price: "123",
+            discount: "15",
             description: "",
             image: "",
             colors: "",
@@ -26,13 +26,13 @@ function Create() {
         method: 'POST',
         mode: 'cors',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ tittle: 'Product'})
+        body: JSON.stringify({ tittle: 'product'})
     };
     const onSubmit = async () => {
         try {
-            await fetch(`http://localhost:3001/products/crear`, requestOptions)
+            await fetch('http://localhost:3001/products/crear', requestOptions)
             .then(async response => {
-                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const isJson = response.headers.get('Content-Type')?.includes('application/json');
                 const data = isJson && await response.json();
                 console.log(data);
     
@@ -47,12 +47,12 @@ function Create() {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-        } catch (errors) {
-            console.log(errors);
+        } catch (error) {
+            console.log(error);
         }
     }
 
-<form onSubmit={handleSubmit(onSubmit)} />
+//<form onSubmit={handleSubmit(onSubmit)} />
 
 
 return (
@@ -60,7 +60,7 @@ return (
     <
         form onSubmit={handleSubmit(onSubmit)}>
         <div>
-            <label>Nombre:</label>
+            <label htmlFor="name">Nombre:</label>
             <input
                 type="string"
                 name="name"
@@ -80,14 +80,14 @@ return (
             <label htmlFor="price">Precio</label>
             <input
                 type="number"
-                name="name"
-                {...register("name", {
+                name="price"
+                {...register("price", {
                     required: {
                         value: true,
-                        message: "Nombre es requerido",
+                        message: "Precio es requerido",
                     },
-                    maxLength: 20,
-                    minLength: 2,
+                    maxLength: 999999999,
+                    minLength: 1,
                 })}
             />  
         </div>
